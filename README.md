@@ -1,6 +1,6 @@
 # adidas_shoes_ecommerce_app_ui
 
-A new Flutter project.
+![](assets/preview.jpg)
 
 ## Getting Started
 
