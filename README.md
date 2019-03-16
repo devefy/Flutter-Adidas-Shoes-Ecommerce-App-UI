@@ -1,4 +1,4 @@
-# adidas_shoes_ecommerce_app_ui
+# Adidas Shoes Ecommerce App UI
 
 ![](assets/preview.jpg)
 
