@@ -13,6 +13,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  bool isFav = false;
+
+  void _favButton(){
+    setState(() {
+      isFav ? isFav = false : isFav = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,12 +52,16 @@ class _MyAppState extends State<MyApp> {
               centerTitle: true,
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(
+                  icon: isFav ? Icon(
                     Icons.favorite_border,
                     size: screenAwareSize(20.0, context),
                     color: Colors.white,
+                  ) : Icon(
+                    Icons.favorite,
+                    size: screenAwareSize(20.0, context),
+                    color: Color(0xFFFB382F),
                   ),
-                  onPressed: () {},
+                  onPressed: _favButton,
                 )
               ],
             ),
