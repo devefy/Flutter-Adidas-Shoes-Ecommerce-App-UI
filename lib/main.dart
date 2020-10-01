@@ -56,10 +56,23 @@ class _MyAppState extends State<MyApp> {
                     Icons.favorite_border,
                     size: screenAwareSize(20.0, context),
                     color: Colors.white,
-                  ) : Icon(
-                    Icons.favorite,
-                    size: screenAwareSize(20.0, context),
-                    color: Color(0xFFFB382F),
+                  ) :
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFFffffff).withAlpha(60),
+                            blurRadius: 7.0,
+                            spreadRadius: 2,
+                          ),
+                        ]
+                    ),
+                    child: Icon(
+                      Icons.favorite,
+                      size: screenAwareSize(20.0, context),
+                      color: Color(0xFFFB382F),
+                    ),
                   ),
                   onPressed: _favButton,
                 )
