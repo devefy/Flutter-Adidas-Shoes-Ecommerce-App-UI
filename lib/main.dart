@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'utils.dart';
+
 import 'data.dart';
+import 'utils.dart';
 
 void main() => runApp(MaterialApp(
       home: MyApp(),
@@ -13,6 +14,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Color shoeColor = colors[0];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,20 +58,25 @@ class _MyAppState extends State<MyApp> {
             body: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  ProductScreenTopPart(),
-                  ProductScreenBottomPart()
+                  ProductScreenTopPart(shoeColor),
+                  ProductScreenBottomPart(
+                    onChangeColor: (Color v) {
+                      setState(() {
+                        shoeColor = v;
+                      });
+                    },
+                  ),
                 ],
               ),
             )));
   }
 }
 
-class ProductScreenTopPart extends StatefulWidget {
-  @override
-  _ProductScreenTopPartState createState() => new _ProductScreenTopPartState();
-}
+class ProductScreenTopPart extends StatelessWidget {
+  final Color color;
 
-class _ProductScreenTopPartState extends State<ProductScreenTopPart> {
+  ProductScreenTopPart(this.color);
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -78,11 +86,15 @@ class _ProductScreenTopPartState extends State<ProductScreenTopPart> {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Container(
-                child: Image.asset("assets/adidas.png",
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover),
+              Center(
+                child: ClipRRect(
+                  child: Image.asset(
+                    "assets/adidas.png",
+                    color: color,
+                    colorBlendMode: BlendMode.hue,
+                  ),
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 60.0, right: 35.0),
@@ -107,7 +119,8 @@ class _ProductScreenTopPartState extends State<ProductScreenTopPart> {
               children: <Widget>[
                 Text("Rating",
                     style: TextStyle(
-                        color: Color(0xFF949598),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                         fontSize: screenAwareSize(10.0, context),
                         fontFamily: "Montserrat-SemiBold")),
                 SizedBox(
@@ -140,6 +153,10 @@ class _ProductScreenTopPartState extends State<ProductScreenTopPart> {
 }
 
 class ProductScreenBottomPart extends StatefulWidget {
+  final Function onChangeColor;
+
+  ProductScreenBottomPart({@required this.onChangeColor});
+
   @override
   _ProductScreenBottomPartState createState() =>
       new _ProductScreenBottomPartState();
@@ -170,13 +187,14 @@ class _ProductScreenBottomPartState extends State<ProductScreenBottomPart> {
   }
 
   List<Widget> colorSelector() {
-    List<Widget> colorItemList = new List();
+    List<Widget> colorItemList = [];
 
     for (var i = 0; i < colors.length; i++) {
       colorItemList
           .add(colorItem(colors[i], i == currentColorIndex, context, () {
         setState(() {
           currentColorIndex = i;
+          widget.onChangeColor(colors[i]);
         });
       }));
     }
